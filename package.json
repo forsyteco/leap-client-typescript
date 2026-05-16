@@ -1,0 +1,62 @@
+{
+  "name": "@forsyteco/leap-client-typescript",
+  "version": "0.1.0",
+  "description": "TypeScript LEAP API client generated with Hey API.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/forsyteco/leap-client-typescript.git"
+  },
+  "bugs": {
+    "url": "https://github.com/forsyteco/leap-client-typescript/issues"
+  },
+  "homepage": "https://github.com/forsyteco/leap-client-typescript#readme",
+  "keywords": [
+    "leap",
+    "openapi",
+    "typescript",
+    "nest",
+    "hey-api"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "preflight-spec": "tsx scripts/preflight-spec.ts",
+    "generate": "npm run preflight-spec && openapi-ts",
+    "build": "npm run clean && tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "npm run typecheck",
+    "prepack": "npm run lint && npm run build",
+    "pack:check": "npm pack --dry-run",
+    "publish:public": "npm publish --access public",
+    "release:patch": "npm version patch && git push && git push --tags",
+    "release:minor": "npm version minor && git push && git push --tags",
+    "release:major": "npm version major && git push && git push --tags"
+  },
+  "devDependencies": {
+    "@hey-api/openapi-ts": "^0.87.3",
+    "@types/node": "^22.15.3",
+    "rimraf": "^6.0.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  }
+}
