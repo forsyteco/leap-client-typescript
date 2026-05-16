@@ -2,3 +2,4 @@
 
 export type * from './types.gen';
 export * from './sdk.gen';
+export { client, type CreateClientConfig } from './client.gen';
