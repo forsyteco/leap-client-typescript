@@ -1,6 +1,6 @@
 {
   "name": "@forsyteco/leap-client-typescript",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "TypeScript LEAP API client generated with Hey API.",
   "repository": {
     "type": "git",
