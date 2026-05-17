@@ -13,19 +13,39 @@ npm install @forsyteco/leap-client-typescript
 ## Usage
 
 ```ts
-import { client, getApiV1MattersByMatterid } from "@forsyteco/leap-client-typescript";
+import {
+  client,
+  configureAuth,
+  exchangeAuthorizationCode,
+  getApiV3Matters,
+  refreshToken,
+} from "@forsyteco/leap-client-typescript";
 
-client.setConfig({
-  baseUrl: "https://uk-api.leap.services",
-  headers: {
-    "x-api-key": process.env.LEAP_PUBLIC_API_KEY!,
-    Authorization: `Bearer ${process.env.LEAP_ACCESS_TOKEN!}`,
-  },
+const exchanged = await exchangeAuthorizationCode({
+  tokenUrl: process.env.LEAP_TOKEN_URL!,
+  clientId: process.env.LEAP_CLIENT_ID!,
+  clientSecret: process.env.LEAP_CLIENT_SECRET!,
+  code: authCodeFromCallback,
+  redirectUri: process.env.LEAP_REDIRECT_URI!,
 });
 
-const response = await getApiV1MattersByMatterid({
+const refreshed = await refreshToken({
+  tokenUrl: process.env.LEAP_TOKEN_URL!,
+  clientId: process.env.LEAP_CLIENT_ID!,
+  clientSecret: process.env.LEAP_CLIENT_SECRET!,
+  refreshToken: exchanged.refresh_token!,
+});
+
+configureAuth({
   client,
-  path: { matterid: "..." },
+  baseUrl: process.env.LEAP_BASE_URL!,
+  auth: refreshed.access_token!,
+  apiKey: process.env.LEAP_PUBLIC_API_KEY!,
+});
+
+const response = await getApiV3Matters({
+  client,
+  query: { maxItems: "20", isCurrent: "true" },
   throwOnError: true,
 });
 ```

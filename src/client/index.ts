@@ -3,3 +3,13 @@
 export type * from './types.gen';
 export * from './sdk.gen';
 export { client, type CreateClientConfig } from './client.gen';
+export {
+  configureAuth,
+  exchangeAuthorizationCode,
+  refreshToken,
+  type ConfigureAuthInput,
+  type ConfigureAuthResult,
+  type ExchangeAuthorizationCodeInput,
+  type OAuthTokenResponse,
+  type RefreshTokenInput,
+} from "./auth";
