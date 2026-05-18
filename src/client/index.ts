@@ -13,3 +13,14 @@ export {
   type OAuthTokenResponse,
   type RefreshTokenInput,
 } from "./auth";
+export {
+  createRequestScopedClient,
+  requestData,
+  requestFields,
+  requestWithResponse,
+  type CreateRequestScopedClientInput,
+  type RequestScopedClient,
+  type TransportFieldsResponse,
+  type TransportRequestOptions,
+  type TransportResponse,
+} from "./transport";

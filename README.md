@@ -10,14 +10,14 @@ This package generates a single combined client at `src/client/` and re-exports 
 npm install @forsyteco/leap-client-typescript
 ```
 
-## Usage
+## Usage (request-scoped)
 
 ```ts
 import {
-  client,
-  configureAuth,
+  createRequestScopedClient,
   exchangeAuthorizationCode,
   getApiV3Matters,
+  requestWithResponse,
   refreshToken,
 } from "@forsyteco/leap-client-typescript";
 
@@ -36,19 +36,29 @@ const refreshed = await refreshToken({
   refreshToken: exchanged.refresh_token!,
 });
 
-configureAuth({
-  client,
+const scoped = createRequestScopedClient({
   baseUrl: process.env.LEAP_BASE_URL!,
   auth: refreshed.access_token!,
   apiKey: process.env.LEAP_PUBLIC_API_KEY!,
 });
 
 const response = await getApiV3Matters({
-  client,
+  client: scoped.client,
+  headers: scoped.headers,
   query: { maxItems: "20", isCurrent: "true" },
   throwOnError: true,
 });
+
+const uploadResponse = await requestWithResponse(scoped, {
+  method: "POST",
+  url: "/api/v1/documents",
+  body: { matterId: "matter-1", docName: "example.pdf" },
+});
+
+console.log(uploadResponse.status, uploadResponse.data);
 ```
+
+Use `createRequestScopedClient()` per request to avoid request-path reliance on shared mutable singleton auth/baseUrl configuration.
 
 ## Development
 
