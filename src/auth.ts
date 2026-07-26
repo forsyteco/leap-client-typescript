@@ -1,4 +1,4 @@
-import { client as leapClient } from "./client.gen";
+import { client as leapClient } from "./client/client.gen";
 
 type ConfigurableClient = {
   setConfig: (config: Record<string, unknown>) => void;

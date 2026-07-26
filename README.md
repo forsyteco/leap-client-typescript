@@ -80,6 +80,11 @@ The generation flow:
 1. Downloads and validates the UK LEAP Swagger 2.0 spec from `LEAP_SPEC_URL` (`openapi/manifest.ts`) into `openapi/openapi.json`.
 2. Runs Hey API once to produce the combined client at `src/client/`.
 
+Hey API owns the `src/client/` directory and rewrites it wholesale on every run. The hand-written
+OAuth (`src/auth.ts`) and request-scoped transport (`src/transport.ts`) helpers live at the `src/`
+root, outside the generated directory, so they survive regeneration and are re-exported from
+`src/index.ts`.
+
 Generated clients are treated as build artifacts. Re-run generation whenever LEAP updates the published Swagger definition.
 
 ## Publish Checklist
