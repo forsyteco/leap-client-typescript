@@ -1,4 +1,4 @@
-import { createClient, type Client, type RequestOptions } from "./client";
+import { createClient, type Client, type RequestOptions } from "./client/client";
 
 type HttpMethod = "CONNECT" | "DELETE" | "GET" | "HEAD" | "OPTIONS" | "PATCH" | "POST" | "PUT" | "TRACE";
 type ParseAs = NonNullable<RequestOptions["parseAs"]>;
